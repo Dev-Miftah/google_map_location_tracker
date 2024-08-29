@@ -17,7 +17,7 @@ class _MapScreenState extends State<MapScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Real-Time Location Tracker'),
+        title: const Text('Real-Time Location Tracker'),
       ),
       body: GoogleMap(
         initialCameraPosition: CameraPosition(
@@ -31,7 +31,7 @@ class _MapScreenState extends State<MapScreen> {
           _animateToUserLocation(locationProvider.currentLocation);
         },
         onTap: (LatLng tappedLocation) {
-          locationProvider.addMarker(tappedLocation); // Add a single marker at the tapped location
+          locationProvider.addMarker(tappedLocation);
         },
       ),
     );

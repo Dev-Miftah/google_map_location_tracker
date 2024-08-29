@@ -5,17 +5,16 @@ import 'dart:async';
 
 class LocationProvider with ChangeNotifier {
   final Location _location = Location();
-  LatLng _currentLocation = LatLng(0, 0);
+  LatLng _currentLocation = const LatLng(0, 0);
   List<LatLng> _polylineCoordinates = [];
   Set<Polyline> _polylines = {};
-  Marker? _currentLocationMarker; // Marker for the user's current location
-  Marker? _selectedLocationMarker; // Marker for the selected location
+  Marker? _currentLocationMarker;
+  Marker? _selectedLocationMarker;
   Timer? _timer;
 
   LatLng get currentLocation => _currentLocation;
   Set<Polyline> get polylines => _polylines;
 
-  // Combine both markers into a set for display
   Set<Marker> get markers {
     final markers = <Marker>{};
     if (_currentLocationMarker != null) markers.add(_currentLocationMarker!);
@@ -31,7 +30,7 @@ class LocationProvider with ChangeNotifier {
     final initialLocation = await _location.getLocation();
     _updateLocation(initialLocation);
 
-    _timer = Timer.periodic(Duration(seconds: 10), (_) async {
+    _timer = Timer.periodic(const Duration(seconds: 10), (_) async {
       final updatedLocation = await _location.getLocation();
       _updateLocation(updatedLocation);
     });
@@ -46,9 +45,8 @@ class LocationProvider with ChangeNotifier {
     _currentLocation = newPosition;
     _polylineCoordinates.add(_currentLocation);
 
-    // Update the marker for the current location
     _currentLocationMarker = Marker(
-      markerId: MarkerId('currentLocation'),
+      markerId: const MarkerId('currentLocation'),
       position: _currentLocation,
       infoWindow: InfoWindow(
         title: 'My Current Location',
@@ -56,10 +54,9 @@ class LocationProvider with ChangeNotifier {
       ),
     );
 
-    // Update the polyline
     _polylines = {
       Polyline(
-        polylineId: PolylineId('route'),
+        polylineId: const PolylineId('route'),
         points: _polylineCoordinates,
         color: Colors.blue,
         width: 5,
@@ -70,9 +67,8 @@ class LocationProvider with ChangeNotifier {
   }
 
   void addMarker(LatLng position) {
-    // Remove the previous selected marker and add the new one
     _selectedLocationMarker = Marker(
-      markerId: MarkerId('selectedLocation'),
+      markerId: const MarkerId('selectedLocation'),
       position: position,
       infoWindow: InfoWindow(
         title: 'Selected Location',
