@@ -10,6 +10,7 @@ class LocationProvider with ChangeNotifier {
   Set<Polyline> _polylines = {};
   Marker? _currentLocationMarker;
   Marker? _selectedLocationMarker;
+  BitmapDescriptor? _customCurrentLocationIcon;
   Timer? _timer;
 
   LatLng get currentLocation => _currentLocation;
@@ -23,7 +24,17 @@ class LocationProvider with ChangeNotifier {
   }
 
   LocationProvider() {
+    _initializeCustomMarkerIcon();
     _initializeLocationUpdates();
+  }
+
+  void _initializeCustomMarkerIcon() async {
+    _customCurrentLocationIcon = await BitmapDescriptor.asset(
+      height: 60,
+      width: 60,
+      const ImageConfiguration(size: Size(60, 60)),
+      'assets/icons/current_location_icon.png',
+    );
   }
 
   void _initializeLocationUpdates() async {
@@ -48,6 +59,7 @@ class LocationProvider with ChangeNotifier {
     _currentLocationMarker = Marker(
       markerId: const MarkerId('currentLocation'),
       position: _currentLocation,
+      icon: _customCurrentLocationIcon ?? BitmapDescriptor.defaultMarker,
       infoWindow: InfoWindow(
         title: 'My Current Location',
         snippet: '${_currentLocation.latitude}, ${_currentLocation.longitude}',
