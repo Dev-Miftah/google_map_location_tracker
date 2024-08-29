@@ -17,7 +17,9 @@ class _MapScreenState extends State<MapScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Real-Time Location Tracker'),
+        title: const Text('Real-Time Location Tracker', style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.deepPurple,
+        centerTitle: true,
       ),
       body: GoogleMap(
         initialCameraPosition: CameraPosition(
