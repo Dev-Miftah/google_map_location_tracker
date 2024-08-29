@@ -33,7 +33,7 @@ class LocationProvider with ChangeNotifier {
       height: 60,
       width: 60,
       const ImageConfiguration(size: Size(60, 60)),
-      'assets/icons/current_location_iconc.png',
+      'assets/icons/current_location_icon.png',
     );
   }
 
